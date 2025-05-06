@@ -5,8 +5,9 @@
 
 ## NEF
 
-- ECS: AWS implementation of container orchestration service
-- EKS: Kubernetes service in AWS cloud
+- Migration from NEF (ECS) to NEF2 (EKS)
+- Elastic Container Service (ECS): AWS implementation of container orchestration service
+- Elastic Kubernetes Service (EKS): Kubernetes service in AWS cloud
 
 
 
@@ -17,10 +18,10 @@ An open source system for automating deployment, scaling, and management of cont
 
 ### Features
 
-- Zero-downtime deployment
-- Self-healing
-- Scaling
-- Load balancing
+- Zero-downtime deployment: rollout or rollback without downtime
+- Self-healing: automatically replace failed instances with healthy ones
+- Scaling: allow to update number of running instances manually or automatically
+- Load balancing: route traffic to healthy instances (random, round-robin, etc.)
 
 
 
@@ -38,6 +39,8 @@ An open source system for automating deployment, scaling, and management of cont
 
 - Smallest deployable units of computing
 - Group of one or more containers
+- code
+- diagram of pods and containers IPEM
 
 
 ### ReplicaSets
@@ -48,6 +51,8 @@ An open source system for automating deployment, scaling, and management of cont
 ### Deployments
 
 - Wrapper around ReplicaSet to allow doing updates to Pods
+- code
+- diagram of Pod > ReplicaSet > Deployments
 
 
 ### Autoscaling Workloads
@@ -58,19 +63,45 @@ An open source system for automating deployment, scaling, and management of cont
 
 #### HPA definition
 
+- code of HPA with min, max, cpuUtil, memory Util
+- Deployment object, HPA object
+
+
+### Cluster
+
+- Node: a virtual or physical machine
+- Cluster: set of nodes
+- Master nodes: host the Kubernetes control plane and manages the cluster
+- Worker nodes: host Pods
+- diagram?
+
+
+### Namespaces
+
+- Provide a scope for names. Names of resources need to be unique within a namespace
+- Help different teams, projects share a cluster
+- example?
+
 
 ### Services
 
-- Expose running application behind a single endpoint (IP address or DNS name)
-
-
-### Nodes
-
-- Master Node (Control plane)
-- Worker Node: run Pods
+- Expose running application behind a single endpoint (IP address or DNS name) in a cluster
+- code
+- diagram?
 
 
 ### Ingress
 
+- A single resource to provide external access to services in cluster
+- Can route traffic by hostname and/or path
+- diagram
+
 
 ### Gateway API
+
+- Supersede Ingress. Same as Ingress but more functionalities
+- Separation of concerns between roles
+- Can route traffic by protocol, hostanme, path, header, query param, method
+- Can modify the header of request and response
+- diagram
+- code
