@@ -1,0 +1,23 @@
+classes {
+  con: {
+    height: 50
+  }
+}
+
+style.fill: transparent
+
+Miniapp Pod {
+  width: 300
+  grid-rows: 2
+  grid-gap: 20
+  nginx container.class: con
+}
+
+steps: {
+  1: {
+    Miniapp Pod {
+      nginx container.class: con
+      node container.class: con
+    }
+  }
+}

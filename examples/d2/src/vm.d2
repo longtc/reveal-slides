@@ -1,0 +1,58 @@
+classes: {
+  VM: {
+    grid-rows: 3
+    grid-columns: 1
+    grid-gap: 10
+    width: 210
+    label: Virtual Machine
+  }
+  w150: { width: 150; height: 40 }
+  w470: { width: 470; height: 50 }
+}
+
+Virtualization {
+  grid-rows: 3
+  grid-gap: 10
+  style: {
+    font-color: "#fbfbfb"
+    stroke: transparent
+    fill: transparent
+    text-transform: uppercase
+  }
+  # style.fill: "#fafafa"
+
+  vm1: {
+    class: VM
+    App.class: w150
+    Bins/Libs.class: w150
+    Guest OS.class: w150
+  }
+
+  vm2: {
+    class: VM
+    App.class: w150
+    Bins/Libs.class: w150
+    Guest OS.class: w150
+  }
+
+  vm3: {
+    class: VM
+    App.class: w150
+    Bins/Libs.class: w150
+    Guest OS.class: w150
+  }
+
+  Hypervisor {
+    class: w470
+    style: {
+      fill: "#BBEAF0"
+    }
+  }
+
+  Host OS {
+    class: w470
+    style: {
+      fill: "#E0C0E5"
+    }
+  }
+}
