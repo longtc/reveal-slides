@@ -1,0 +1,108 @@
+direction: right
+# style.fill: transparent
+
+classes: {
+  svc: {
+    grid-rows: 1
+    grid-gap: 10
+    shape: oval
+    height: 60
+    # width: 130
+  }
+
+  pod: {
+    grid-rows: 1
+    grid-gap: 50
+    height: 80
+    style: {
+      multiple: true
+    }
+  }
+
+  la: {
+    height: 25
+    # style {
+    #   stroke-dash: 3
+    #   # fill: transparent
+    # }
+  }
+}
+
+Cluster {
+  style {
+    stroke-dash: 3
+    fill: transparent
+  }
+
+  svc1 {
+    class: svc
+    label: web-svc
+    svc-label {
+      class: la
+      label: app=nginx
+    }
+  }
+  svc2 {
+    class: svc
+    label: customer-svc
+    svc-label {
+      class: la
+      label: app=customer
+    }
+  }
+
+  pod1 {
+    class: pod
+    label: 10.10.1.1
+    web-label {
+      class: la
+      label: app=nginx
+    }
+  }
+  pod2 {
+    class: pod
+    label: 10.10.1.2
+    web-label {
+      class: la
+      label: app=nginx
+    }
+  }
+  pod3 {
+    class: pod
+    label: 10.10.1.10
+    web-label {
+      class: la
+      label: app=customer
+    }
+  }
+  pod4 {
+    class: pod
+    label: 10.10.1.11
+    web-label {
+      class: la
+      label: app=customer
+    }
+  }
+
+  svc1 -> pod1 {
+    style {
+      stroke: deepskyblue
+    }
+  }
+  svc1 -> pod2 {
+    style {
+      stroke: deepskyblue
+    }
+  }
+  svc2 -> pod3 {
+    style {
+      stroke: deepskyblue
+    }
+  }
+  svc2 -> pod4 {
+    style {
+      stroke: deepskyblue
+    }
+  }
+
+}

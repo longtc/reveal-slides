@@ -1,0 +1,84 @@
+direction: right
+# style.fill: transparent
+
+classes: {
+  pod: {
+    label: Pod
+    style {
+      multiple: true
+    }
+  }
+
+  route-svc: {
+    shape: oval
+    height: 55
+    width: 130
+  }
+
+  host: {
+    height: 40
+    width: 150
+  }
+}
+
+client {
+  shape: person
+}
+
+Gateway {
+  style {
+    stroke-dash: 3
+    fill: transparent
+  }
+
+  Load Balancer {
+    shape: image
+    width: 120
+    icon: https://icons.terrastruct.com/aws%2FNetworking%20&%20Content%20Delivery%2FElastic-Load-Balancing-ELB_Application-load-balancer_light-bg.svg
+  }
+}
+
+HttpRoute {
+  height: 250
+  style {
+    stroke-dash: 3
+    fill: transparent
+  }
+
+  host1 {
+    class: host
+    label: "foo.bar.com/login"
+  }
+  host2 {
+    class: host
+    label: "foo.bar.com/*"
+  }
+
+}
+
+Service1 {
+  class: route-svc
+  label: Service\nfoo-auth-svc
+}
+Service2 {
+  class: route-svc
+  label: Service\nfoo-web-svc
+}
+
+Pod1.class: pod
+Pod2.class: pod
+
+client -> Gateway.Load Balancer: HTTP request
+Gateway.Load Balancer -> HttpRoute.host1
+Gateway.Load Balancer -> HttpRoute.host2
+HttpRoute.host1 -> Service1: Routing rule
+HttpRoute.host2 -> Service2: Routing rule
+Service1 -> Pod1
+Service2 -> Pod2
+
+steps: {
+  1: {
+    Gateway.label: Ingress
+    HttpRoute.label: Ingress
+  }
+}

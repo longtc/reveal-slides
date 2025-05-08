@@ -1,0 +1,48 @@
+direction: right
+
+classes: {
+  node: {
+    label: Node
+    grid-rows: 2
+    grid-columns: 2
+    grid-gap: 20
+    # width:
+  }
+
+  pod: {
+    label: Pod
+    # width: 60
+    # height: 60
+  }
+}
+
+Cluster {
+  style: {
+    text-transform: uppercase
+    stroke-dash: 3
+    # fill: transparent
+  }
+
+  Master node {
+    height: 400
+
+    Control Plane
+  }
+
+  Node1 {
+    class: node
+    pod1.class: pod
+    pod2.class: pod
+    pod3.class: pod
+  }
+  Node2 {
+    class: node
+    pod1.class: pod
+    pod2.class: pod
+    pod3.class: pod
+  }
+
+  Master node.Control Plane -> Node1
+  Master node.Control Plane -> Node2
+
+}

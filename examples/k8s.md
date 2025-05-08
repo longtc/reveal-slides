@@ -46,6 +46,9 @@ An open source system for automating deployment, scaling, and management of cont
 - Smallest deployable units of computing
 - Group of one or more containers
 
+Note:
+- instance of app
+
 
 #### Pod definition
 
@@ -69,6 +72,10 @@ spec:
         memory: 256Mi
 ```
 
+Note:
+- m is milicores
+- Kubernetes object --> cluster desired state
+
 
 ![miniapp pod 1 container](assets/svg/miniapp/index.svg) <!-- .element: width="600" -->
 
@@ -88,7 +95,7 @@ spec:
 
 #### Deployment definition
 
-```yaml [1-4|5-6|7-13]
+```yaml [1-4|5-6|7-13|20-24]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -108,10 +115,15 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25% # default
+      maxUnavailable: 25% # default
 ```
 
-
-- diagram of Pod > ReplicaSet > Deployments
+Note:
+- zero downtime
 
 
 
@@ -119,6 +131,11 @@ spec:
 
 - HPA: automatically scale a workload horizontally (number of running Pods)
 - VPA: automatically scale a workload vertically (resizing CPU and memory)
+
+Note:
+- scale workload depending on current demand
+- increase/decrease number of replicas or adjust resources
+- use cases for each?
 
 
 #### HPA definition
@@ -158,11 +175,11 @@ spec:
         averageUtilization: 70
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 180
+      stabilizationWindowSeconds: 300 # default
 ```
 
-
-- Deployment object, HPA object
+Note:
+- stabilization window: delay scaling action, prevent flapping
 
 
 
@@ -172,7 +189,12 @@ spec:
 - Cluster: set of nodes
 - Master nodes: host the Kubernetes control plane and manages the cluster
 - Worker nodes: host Pods
-- diagram?
+
+Note:
+- scheduling: assign pods to nodes
+
+
+![nodes](assets/svg/node.svg) <!-- .element: height="500" -->
 
 
 ### Namespaces
@@ -186,6 +208,10 @@ spec:
 ### Services
 
 - Expose running application behind a single endpoint (IP address or DNS name) in a cluster
+
+Note:
+- why do we need service?
+- pods are ephemeral
 
 
 #### Service definition
@@ -226,13 +252,21 @@ spec:
 ```
 
 
-- diagram?
+![service](assets/svg/service.svg) <!-- .element: height="500" -->
 
 
 ### Ingress
 
 - A single resource to provide external access to services in cluster
 - Can route traffic by hostname and/or path
+
+Note:
+- implemented by cloud providers
+- load balancer with public IP
+
+
+#### Http routing
+![ingress routing](assets/svg/http-routing/1.svg)
 
 
 #### Ingress definition
@@ -272,22 +306,34 @@ spec:
               name: web-svc-port
 ```
 
-
-- diagram
+Note:
+- single object for both infra and routing
 
 
 ### Gateway API
 
 - Supersede Ingress. Same as Ingress but more functionalities
+- Gateway: defines an instance of traffic handling infrastructure, such as cloud load balancer
+- Route resources: define protocol-specific routing rules from a Gateway listener to a backend
+
+Note:
+- not to be confused with API gateway
+
+
+#### Gateway API features
+
 - Separation of concerns between roles
-- Can route traffic by protocol, hostanme, path, header, query param, method
+- Can route traffic by protocol, hostname, path, header, query param, method
 - Can modify the header of request and response
-- diagram
+
+
+#### Http routing
+![gateway api routing](assets/svg/http-routing/index.svg)
 
 
 #### Gateway API definition
 
-```yaml [14-23|4,10,17,25-41]
+```yaml [14-23|4,10,17,22-23,25-41]
 apiVersion: v1
 kind: Service
 metadata:
@@ -330,6 +376,3 @@ spec:
     - name: webapp-service
       port: 80
 ```
-
-
-- diagram?
